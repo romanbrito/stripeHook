@@ -17,7 +17,7 @@ app.use('/v1/products', productRouter)
 const start = async () => {
   try {
     // connect to db
-    await db.sequelize.sync()
+    await db.sequelize.sync({ force: true })
     console.log('Connection has been established successfully.');
     app.listen(config.port, () => {
       console.log(`API on http://localhost:${config.port}/product`)

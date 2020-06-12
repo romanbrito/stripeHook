@@ -1,14 +1,12 @@
 const Router = require('express').Router
+const controllers = require('./product.controllers')
 
 const router = Router()
 
 router
   .route('/') 
-  .get((req, res) => {
-    console.log('product route')
-    res.send('hi dog')
-  })
-  .post()
+  .get(controllers.getMany())
+  .post(controllers.createOne())
 
 router
   .route('/:id')
