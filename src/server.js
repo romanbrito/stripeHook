@@ -3,7 +3,7 @@ const express = require('express')
 const logger = require('morgan')
 const config = require('./config')
 const productRouter = require('./resources/product/product.router')
-const connect = require('./utils/db')
+const db = require('./utils/db')
 
 const app = express()
 
@@ -17,7 +17,8 @@ app.use('/v1/products', productRouter)
 const start = async () => {
   try {
     // could connect to db but would need async /await
-    await connect()
+    // await connect()
+    await db.sequelize.sync()
     console.log('Connection has been established successfully.');
     app.listen(config.port, () => {
       console.log(`API on http://localhost:${config.port}/product`)
