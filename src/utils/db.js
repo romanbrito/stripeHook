@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize')
+const { Sequelize, Model, DataTypes } = require('sequelize')
 const sequelize = new Sequelize(
   process.env.DATABASE,
   process.env.DATABASE_USER,
@@ -9,23 +9,22 @@ const sequelize = new Sequelize(
   }
 )
 
-// const connect = () => {
-//   return sequelize.authenticate()
-// }
+// Insert models below
+const ProductModel = require('../resources/product/product.model')
 
-const db = {
-  Sequelize,
-  sequelize,
+const models = {
+  ProductModel: ProductModel.init(sequelize)
 }
 
-// Insert models below
-console.log(db.sequelize)
-db.product = db.sequelize.import('../resources/product/product.model')
+// Run `.associate` it it exists,
+// ie create realtionships in th ORM
+Object.values(models)
+  .filter(model => typeof model.associate === "funciton")
+  .forEach(model => model.associate(models))
 
-Object.keys(db).forEach((modelName) => {
-  if ('classMethods' in db[modelName].options) {
-    db[modelName].options.classMethods.associate(db)
-  }
-})
+const db = {
+  ...models,
+  sequelize
+}
 
 module.exports = db

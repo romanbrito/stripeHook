@@ -1,19 +1,25 @@
-module.exports = (sequelize, DataTypes) => {
-  var Task = sequelize.define('Task', {
-    title: DataTypes.STRING
-  });
+const { Sequelize, Model, DataTypes } = require('sequelize')
 
-  Task.associate = function (models) {
-    models.Task.belongsTo(models.User, {
-      onDelete: "CASCADE",
-      foreignKey: {
+class Product extends Model{
+  static init(sequelize) {
+    return super.init({
+      // Model attributes are defined here
+      name: {
+        type: DataTypes.STRING,
         allowNull: false
+      },
+      description: {
+        type: DataTypes.STRING
+        // allowNull defaults to true
       }
-    });
-  };
+    }, {
+      sequelize,
+      modelName: 'Product'
+    })
+  }
+}
 
-  return Task;
-};
+module.exports = Product
 
 // var stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
 

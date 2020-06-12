@@ -16,8 +16,7 @@ app.use('/v1/products', productRouter)
 
 const start = async () => {
   try {
-    // could connect to db but would need async /await
-    // await connect()
+    // connect to db
     await db.sequelize.sync()
     console.log('Connection has been established successfully.');
     app.listen(config.port, () => {
