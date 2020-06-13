@@ -1,3 +1,46 @@
+const Sequelize = require('sequelize')
+// const db = require('../../../utils/db')
+const ProductModel = require('../product.model')
+
+
+// Mocking Sequelize
+jest.mock('sequelize',() => { 
+  // Require the original module to not be mocked...
+  const originalModule = jest.requireActual('sequelize')
+  class Model {}
+  Model.init = jest.fn()
+
+  return {
+    ...originalModule,
+    Model
+  }
+})
+
+describe('Product Model', () => {
+  describe('schema', () => {
+    test('It called ProductModel.init with the correct parameters', () => {
+      // console.log(Sequelize)
+      const { Model, DataTypes } = require('sequelize')
+      ProductModel.init()
+      expect(Model.init).toHaveBeenCalledTimes(1)
+      Model.init.mock.calls.forEach(args => {
+        expect(args).toEqual([{
+          name: {
+            type: DataTypes.STRING,
+            allowNull: false
+          },
+          description: {
+            type: DataTypes.STRING
+          }
+        },
+        {
+          modelName: 'Product',
+          sequelize: undefined
+        }])
+      })
+    })
+  })
+})
 // { event: 'trigger-test', created_at: '2020-06-10T02:38:36.254Z' }
 // {
 //   event: 'entry.update',
