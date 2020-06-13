@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 // const db = require('../../../utils/db')
 const ProductModel = require('../product.model')
+const { beforeBulkCreate } = require('../product.model')
 
 
 // Mocking Sequelize
@@ -16,10 +17,14 @@ jest.mock('sequelize',() => {
   }
 })
 
+beforeEach(() => {
+  const { Model } = require('sequelize')
+  Model.init.mockClear()
+})
+
 describe('Product Model', () => {
   describe('schema', () => {
     test('It called ProductModel.init with the correct parameters', () => {
-      // console.log(Sequelize)
       const { Model, DataTypes } = require('sequelize')
       const sequelize = jest.fn()
       ProductModel.init(sequelize)
@@ -43,6 +48,7 @@ describe('Product Model', () => {
     })
   })
 })
+
 // { event: 'trigger-test', created_at: '2020-06-10T02:38:36.254Z' }
 // {
 //   event: 'entry.update',
