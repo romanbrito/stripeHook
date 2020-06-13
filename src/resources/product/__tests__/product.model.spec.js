@@ -21,8 +21,10 @@ describe('Product Model', () => {
     test('It called ProductModel.init with the correct parameters', () => {
       // console.log(Sequelize)
       const { Model, DataTypes } = require('sequelize')
-      ProductModel.init()
+      const sequelize = jest.fn()
+      ProductModel.init(sequelize)
       expect(Model.init).toHaveBeenCalledTimes(1)
+
       Model.init.mock.calls.forEach(args => {
         expect(args).toEqual([{
           name: {
@@ -35,7 +37,7 @@ describe('Product Model', () => {
         },
         {
           modelName: 'Product',
-          sequelize: undefined
+          sequelize
         }])
       })
     })
