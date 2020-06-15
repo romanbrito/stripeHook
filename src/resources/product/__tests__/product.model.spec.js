@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize')
-// const db = require('../../../utils/db')
 const ProductModel = require('../product.model')
-const { beforeBulkCreate } = require('../product.model')
 
 
 // Mocking Sequelize
@@ -27,9 +25,10 @@ describe('Product Model', () => {
     test('It called ProductModel.init with the correct parameters', () => {
       const { Model, DataTypes } = require('sequelize')
       const sequelize = jest.fn()
-      ProductModel.init(sequelize)
-      expect(Model.init).toHaveBeenCalledTimes(1)
 
+      ProductModel.init(sequelize)
+      
+      expect(Model.init).toHaveBeenCalledTimes(1)
       Model.init.mock.calls.forEach(args => {
         expect(args).toEqual([{
           name: {
