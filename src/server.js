@@ -20,7 +20,7 @@ const start = async () => {
     await db.sequelize.sync({ force: true })
     console.log('Connection has been established successfully.');
     app.listen(config.port, () => {
-      console.log(`API on http://localhost:${config.port}/product`)
+      console.log(`API on http://localhost:${config.port}/v1/products`)
     })
   } catch(e) {
     console.error(e)
