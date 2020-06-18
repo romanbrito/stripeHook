@@ -5,18 +5,16 @@ const controllers = {
   createOne() {
     return async (req, res) => {
       try {
-        let email = 'admin@example.com';
-console.log(email.includes('@'));
         // const doc = await Product.create({...req.body})
         // res.status(201).json({ data: doc})
         const {event, entry} = req.body
-
         stripe.products.retrieve(
           entry.uid,
           function(err, product) {
             // asynchronously called
             if(product) {
               console.log('product exists', product)
+              res.status(201).json({ data: product})
             } else if(err.code === 'resource_missing') {
               console.log('creating product')
               const {product} = entry
