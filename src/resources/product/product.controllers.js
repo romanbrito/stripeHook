@@ -17,13 +17,13 @@ const controllers = {
               res.status(200).json({ message: 'Product already exists'})
             } else if(err.code === 'resource_missing') {
               console.log('creating product')
-              const {product} = entry
-              const stripeProduct = {...product, id: entry.uid}
-              console.log('---Stripe Product----', stripeProduct)
-              stripe.products.create(product, (err, product) => {
-                console.log('---create----')
-              })
-              // res.status(201).json({ data: product})
+              // const {product} = entry
+              // const stripeProduct = {...product, id: entry.uid}
+              // console.log('---Stripe Product----', stripeProduct)
+              // stripe.products.create(product, (err, product) => {
+              //   console.log('---create----')
+              // })
+              res.status(201).json({ data: 'hello'})
             } else {
               throw(err)
             }
