@@ -8,6 +8,7 @@ const controllers = {
         // const doc = await Product.create({...req.body})
         // res.status(201).json({ data: doc})
         const {event, entry} = req.body
+        console.log(entry.uid)
         stripe.products.retrieve(
           entry.uid,
           function(err, product) {
@@ -20,8 +21,8 @@ const controllers = {
               const {product} = entry
               const stripeProduct = {...product, id: entry.uid}
               console.log(stripeProduct)
-              // stripe.products.create(product)
-              // res.status(201).json({ data: product})
+              stripe.products.create(product)
+              res.status(201).json({ data: product})
             } else {
               throw(err)
             }
