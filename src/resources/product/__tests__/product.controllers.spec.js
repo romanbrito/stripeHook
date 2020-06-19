@@ -7,7 +7,7 @@ jest.mock('stripe', () => {
  
   const createMock = jest
   .fn()
-  .mockImplementation((id, cb) => {
+  .mockImplementation((prod, cb) => {
     const product = {
       "id": "2cf9e427-cc25-41a6-8f07-387118b5a07a",
       "object": "product",
@@ -24,7 +24,7 @@ jest.mock('stripe', () => {
       "unit_label": null,
       "updated": 1592273807
     }
-    if (id === '2cf9e427-cc25-41a6-8f07-387118b5a07a') {
+    if (prod.id === '2cf9e427-cc25-41a6-8f07-387118b5a07a') {
       cb(null, product)
     } else {
       cb({ code: 'some error'})
@@ -79,7 +79,7 @@ test('Case Product Exists', async () => {
 
 })
 
-test('Case Product Does Noet Exist', async () => {
+test('Case Product Does Not Exist', async () => {
   
   const req = { body: {
     entry: {
@@ -94,14 +94,32 @@ test('Case Product Does Noet Exist', async () => {
       return this 
     },
     json(result) {
+      // expect(result.data.toString()).toBe('hello')
+    }
+  }
+  await controllers.createOne()(req, res)
+})
+
+test('Create Product', async () => {
+  
+  const req = { body: {
+    entry: {
+      uid: '2cf9e427-cc25-41a6-8f07-387118b5a07a'}
+   }}
+  
+  const res = {
+    status(status) {
+      expect(status).toBe(201)
+      const stripe = require('stripe')()
+      expect(stripe.products.retrieve).toHaveBeenCalled()
+      return this 
+    },
+    json(result) {
       expect(result.data.toString()).toBe('hello')
     }
   }
-
   await controllers.createOne()(req, res)
-
 })
-
 // test('Create Product if Product does not exist ', async () => {
 //   const req = { body: {
 //     entry: {
