@@ -89,6 +89,8 @@ test('Case Product Does Noet Exist', async () => {
   const res = {
     status(status) {
       expect(status).toBe(201)
+      const stripe = require('stripe')()
+      expect(stripe.products.retrieve).toHaveBeenCalled()
       return this 
     },
     json(result) {
