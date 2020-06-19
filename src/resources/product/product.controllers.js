@@ -13,15 +13,15 @@ const controllers = {
           function(err, product) {
             // asynchronously called
             if(product) {
-              console.log('product exists', product)
-              res.status(201).json({ data: product})
+              
+              res.status(200).json({ message: 'Product already exists'})
             } else if(err.code === 'resource_missing') {
               console.log('creating product')
               const {product} = entry
               const stripeProduct = {...product, id: entry.uid}
               console.log(stripeProduct)
               // stripe.products.create(product)
-              
+              // res.status(201).json({ data: product})
             } else {
               throw(err)
             }
