@@ -123,9 +123,11 @@ test('Create Product', async () => {
       expect(status).toBe(201)
       const stripe = require('stripe')()
       expect(stripe.products.create).toHaveBeenCalled()
+
       const expectedImages = [
         expect.stringMatching(`${process.env.STRAPI_HOST}/uploads/TheHickory-SocialMedia_40f7fdf460.jpeg`)
       ]
+      
       expect(stripe.products.create).toHaveBeenCalledWith(
         expect.objectContaining({
           id: expect.any(String),
