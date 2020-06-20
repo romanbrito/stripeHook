@@ -15,7 +15,7 @@ jest.mock('stripe', () => {
       "attributes": [],
       "created": 1592272892,
       "description": 'Beef, Grilled Onions, Cheddar Cheese, Cherry Peppers, Hickory Sauce',
-      "images": ['https://rockingcms.com/uploads/TheHickory-SocialMedia`_40f7fdf460.jpeg'],
+      "images": ['https://rockingcms.com/uploads/TheHickory-SocialMedia_40f7fdf460.jpeg'],
       "livemode": false,
       "metadata": {},
       "name": "The Hickory",
@@ -83,8 +83,42 @@ test('Case Product Does Not Exist', async () => {
   
   const req = { body: {
     entry: {
-      uid: 'uuasdfasjkk'}
-   }}
+      uid: '2cf9e427-cc25-41a6-8f07-387118b5a07a',
+      name: 'The Hickory',
+      active: true,
+      description: 'Beef, Grilled Onions, Cheddar Cheese, Cherry Peppers, Hickory Sauce',
+      type: 'good',
+      url: null,
+      metadata: null,
+      caption: 'The Hickory',
+      shippable: false,
+      category: 'signature_cheesesteaks',
+      created_at: '2020-06-17T14:43:46.058Z',
+      updated_at: '2020-06-17T14:43:46.058Z',
+      images: [
+        {
+          id: 4,
+          name: 'TheHickory-SocialMedia',
+          alternativeText: '',
+          caption: '',
+          width: 1080,
+          height: 1080,
+          formats: [Object],
+          hash: 'TheHickory-SocialMedia_40f7fdf460',
+          ext: '.jpeg',
+          mime: 'image/jpeg',
+          size: 274.78,
+          url: '/uploads/TheHickory-SocialMedia_40f7fdf460.jpeg',
+          previewUrl: null,
+          provider: 'local',
+          provider_metadata: null,
+          created_at: '2020-06-17T14:43:39.097Z',
+          updated_at: '2020-06-17T14:43:39.097Z'
+        }
+      ]
+    }
+    
+  }}
   
   const res = {
     status(status) {
@@ -118,17 +152,17 @@ test('Create Product', async () => {
       images: [
         {
           id: 4,
-          name: 'TheHickory-SocialMedia`',
+          name: 'TheHickory-SocialMedia',
           alternativeText: '',
           caption: '',
           width: 1080,
           height: 1080,
           formats: [Object],
-          hash: 'TheHickory-SocialMedia`_40f7fdf460',
+          hash: 'TheHickory-SocialMedia_40f7fdf460',
           ext: '.jpeg',
           mime: 'image/jpeg',
           size: 274.78,
-          url: '/uploads/TheHickory-SocialMedia`_40f7fdf460.jpeg',
+          url: '/uploads/TheHickory-SocialMedia_40f7fdf460.jpeg',
           previewUrl: null,
           provider: 'local',
           provider_metadata: null,
@@ -160,7 +194,7 @@ test('Create Product', async () => {
 
       // })
       const expectedImages = [
-        expect.stringMatching(/TheHickory/)
+        expect.stringMatching('.jpg')
       ]
       expect(stripe.products.create).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -171,7 +205,7 @@ test('Create Product', async () => {
           type: expect.anything(),
           caption: expect.any(String),
           shippable: expect.any(Boolean),
-          // images: expect.arrayContaining(expectedImages)
+          images: expect.arrayContaining(expectedImages)
         }),
         expect.any(Function)
       )

@@ -18,11 +18,12 @@ const controllers = {
             } else if(err.code === 'resource_missing') {
               console.log('creating product')
               const product = entry
+              const stripeImages = [...product.images]
               const stripeProduct = {
                 id: product.uid,
                 active: product.active,
                 description: product.description,
-                images: product.images,
+                images: stripeImages.map(image => image.url),
                 metadata: product.metadata,
                 name: product.name,
                 type: product.type,
@@ -30,10 +31,7 @@ const controllers = {
                 url: product.url,
                 shippable: product.shippable
               }
-              console.log('---Stripe Product----', stripeProduct)
               stripe.products.create(stripeProduct, (err, product) => {
-                console.log('---errr', err)
-                console.log('---create----', product)
                 res.status(201).json({ data: product})
               })
               
