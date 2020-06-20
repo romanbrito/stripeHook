@@ -17,8 +17,19 @@ const controllers = {
               res.status(200).json({ message: 'Product already exists'})
             } else if(err.code === 'resource_missing') {
               console.log('creating product')
-              const {product} = entry
-              const stripeProduct = {...product, id: entry.uid}
+              const product = entry
+              const stripeProduct = {
+                id: product.uid,
+                active: product.active,
+                description: product.description,
+                images: product.images,
+                metadata: product.metadata,
+                name: product.name,
+                type: product.type,
+                caption: product.caption,
+                url: product.url,
+                shippable: product.shippable
+              }
               console.log('---Stripe Product----', stripeProduct)
               stripe.products.create(stripeProduct, (err, product) => {
                 console.log('---errr', err)
