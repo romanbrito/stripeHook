@@ -59,7 +59,6 @@ beforeEach(() => {
 })
 
 test('Case Product Exists', async () => {
-  
   const req = { body: {
     entry: {
       uid: 'c83bd69e-e3c7-433a-9e31-c9e7daed936a'}
@@ -79,62 +78,7 @@ test('Case Product Exists', async () => {
 
 })
 
-test('Case Product Does Not Exist', async () => {
-  
-  const req = { body: {
-    entry: {
-      uid: '2cf9e427-cc25-41a6-8f07-387118b5a07a',
-      name: 'The Hickory',
-      active: true,
-      description: 'Beef, Grilled Onions, Cheddar Cheese, Cherry Peppers, Hickory Sauce',
-      type: 'good',
-      url: null,
-      metadata: null,
-      caption: 'The Hickory',
-      shippable: false,
-      category: 'signature_cheesesteaks',
-      created_at: '2020-06-17T14:43:46.058Z',
-      updated_at: '2020-06-17T14:43:46.058Z',
-      images: [
-        {
-          id: 4,
-          name: 'TheHickory-SocialMedia',
-          alternativeText: '',
-          caption: '',
-          width: 1080,
-          height: 1080,
-          formats: [Object],
-          hash: 'TheHickory-SocialMedia_40f7fdf460',
-          ext: '.jpeg',
-          mime: 'image/jpeg',
-          size: 274.78,
-          url: '/uploads/TheHickory-SocialMedia_40f7fdf460.jpeg',
-          previewUrl: null,
-          provider: 'local',
-          provider_metadata: null,
-          created_at: '2020-06-17T14:43:39.097Z',
-          updated_at: '2020-06-17T14:43:39.097Z'
-        }
-      ]
-    }
-    
-  }}
-  
-  const res = {
-    status(status) {
-      expect(status).toBe(201)
-      const stripe = require('stripe')()
-      expect(stripe.products.retrieve).toHaveBeenCalled()
-      return this 
-    },
-    json(result) {
-    }
-  }
-  await controllers.createOne()(req, res)
-})
-
 test('Create Product', async () => {
-  
   const req = { body: {
     entry: {
       uid: '2cf9e427-cc25-41a6-8f07-387118b5a07a',
@@ -179,22 +123,8 @@ test('Create Product', async () => {
       expect(status).toBe(201)
       const stripe = require('stripe')()
       expect(stripe.products.create).toHaveBeenCalled()
-      // expect(stripe.products.create).toHaveBeenCalledWith({
-      //   id: '2cf9e427-cc25-41a6-8f07-387118b5a07a',
-      //   name: 'The Hickory',
-      //   active: true,
-      //   description: 'Beef, Grilled Onions, Cheddar Cheese, Cherry Peppers, Hickory Sauce',
-      //   type: 'good',
-      //   url: null,
-      //   metadata: null,
-      //   caption: 'The Hickory',
-      //   shippable: false,
-      //   images: ['https://rockingcms.com/uploads/TheHickory-SocialMedia`_40f7fdf460.jpeg'],
-      // }, (err, product) => {
-
-      // })
       const expectedImages = [
-        expect.stringMatching('.jpg')
+        expect.stringMatching(`${process.env.STRAPI_HOST}/uploads/TheHickory-SocialMedia_40f7fdf460.jpeg`)
       ]
       expect(stripe.products.create).toHaveBeenCalledWith(
         expect.objectContaining({

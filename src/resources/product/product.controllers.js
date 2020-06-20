@@ -23,7 +23,7 @@ const controllers = {
                 id: product.uid,
                 active: product.active,
                 description: product.description,
-                images: stripeImages.map(image => image.url),
+                images: stripeImages.map(image => `${process.env.STRAPI_HOST}${image.url}`),
                 metadata: product.metadata,
                 name: product.name,
                 type: product.type,
