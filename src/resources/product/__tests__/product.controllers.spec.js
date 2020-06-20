@@ -143,42 +143,7 @@ test('Create Product', async () => {
       )
       return this 
     },
-    json(result) {
-      // expect(result.data.toString()).toBe('hello')
-    }
+    json(result) {}
   }
   await controllers.createOne()(req, res)
 })
-// test('Create Product if Product does not exist ', async () => {
-
-  
-//   const res = {
-//     status(status) {
-//       expect(status).toBe(201)
-//       return this
-//     },
-//     json(result) {
-//       // create product
-//       // expect(result.message.toString()).toBe('Product already exists')
-//     }
-//   }
-//   await controllers.createOne()(req, res)
-//   expect(stripe().products.create).toHaveBeenCalled()
-// })
-
-// const response = {
-//   "id": "2cf9e427-cc25-41a6-8f07-387118b5a07a",
-//   "object": "product",
-//   "active": true,
-//   "attributes": [],
-//   "created": 1592272892,
-//   "description": 'Beef, Grilled Onions, Cheddar Cheese, Cherry Peppers, Hickory Sauce',
-//   "images": ['https://rockingcms.com/uploads/TheHickory-SocialMedia`_40f7fdf460.jpeg'],
-//   "livemode": false,
-//   "metadata": {},
-//   "name": "The Hickory",
-//   "statement_descriptor": null,
-//   "type": "good",
-//   "unit_label": null,
-//   "updated": 1592273807
-// }
